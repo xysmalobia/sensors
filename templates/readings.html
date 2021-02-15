@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Readings
+{% endblock %}
+
+{% block main %}
+    <h1>Sensor readings</h1>
+    <p>A complete list of all readings in the database.</p>
+    <div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Pressure</th>
+                <th>pm1</th>
+                <th>pm2</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row.temperature|e }}</td>
+                <td>{{ row.humidity|e }}</td>
+                <td>{{ row.pressure|e }} </td>
+                <td>{{ row.pm1|e }}</td>
+                <td>{{ row.pm2|e }}</td>
+                <td>{{ row.date|e }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+{% endblock %}

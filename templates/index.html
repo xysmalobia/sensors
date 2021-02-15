@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <h1>Welcome, {{username}}.</h1>
+    <p class="text-justify lead">This website collects readings from an <mark>Enviro+ sensor</mark> that is connected to a <mark>Raspberry Pi Zero</mark> single-board computer to measure the <mark>air quality</mark> in a room. The Raspberry Pi transmits data to a MySQL database on PythonAnywhere using a Python script to read the sensor data, access the database and write the values into a table. This web application, made with Flask and Python, then accesses the MySQL database and renders a few graphs to better illustrate the readings.<br><br></p>
+    <h2>Readings</h2>
+    <dl class="row">
+        <dt class="col-sm-2 text-right">Temperature</dt>
+        <dd class="col-sm-10 text-left">in °C</dd>
+        <dt class="col-sm-2 text-right">Humidity</dt>
+        <dd class="col-sm-10 text-left">in %</dd>
+        <dt class="col-sm-2 text-right">Pressure</dt>
+        <dd class="col-sm-10 text-left">in hPa</dd>
+        <dt class="col-sm-2 text-right">Gas</dt>
+        <dd class="col-sm-10 text-left">in Ohms (calculated resistances via ADC)</dd>
+        <dt class="col-sm-2 text-right">Particulates</dt>
+        <dd class="col-sm-10 text-left">measures 1, 2.5, 10 ug/m3</dd>
+    </dl>
+    <h2>Setup</h2>
+    <dl class="row">
+        <dt class="col-sm-2 text-right">Raspberry Pi</dt>
+        <dd class="col-sm-10 text-left">I use a cheap Raspberry Pi Zero W with Raspbian. Specifications <a href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/" target="blank">here</a>.</dd>
+        <dt class="col-sm-2 text-right">Sensor</dt>
+        <dd class="col-sm-10 text-left">More information about the Enviro+ sensor can be found on the <a href="https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-enviro-plus" target="blank">Pimoroni website</a>. I followed their instructions when setting it up and used their library to connect to the individual sensors.</dd>
+        <dt class="col-sm-2 text-right">Web application</dt>
+        <dd class="col-sm-10 text-left">Made with Flask, Python, <a href="https://www.chartjs.org/" target="blank">Chart.js</a> and <a href="https://getbootstrap.com/" target="blank">Bootstrap</a>, based on code from <a href="https://cs50.harvard.edu/x/2020/tracks/web/finance/" target="blank">CS50 Finance</a>.</li>
+        <dt class="col-sm-2 text-right">Schematic</dt>
+        <dd class="col-sm-10 text-left">A little schematic to illustrate the workflow.</dd>
+        <dt class="col-sm-2 text-right">Code</dt>
+        <dd class="col-sm-10 text-left">My code can be found on github.</dd>
+    </dl>
+{% endblock %}

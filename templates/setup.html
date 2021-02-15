@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Setup
+{% endblock %}
+
+{% block main %}
+    <h1>Workflow and setup</h1>
+    <p class="text-justify lead">The schematic on this page gives a quick overview of the project setup and components.</p>
+    <p><img src="static/setup.jpg" alt="workflow"></p>
+    <h2>Setup</h2>
+    <dl class="row">
+        <dt class="col-sm-2 text-right">Raspberry Pi</dt>
+        <dd class="col-sm-10 text-left">I use a cheap Raspberry Pi Zero W with Raspbian. Specifications <a href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/" target="blank">here</a>.</dd>
+        <dt class="col-sm-2 text-right">Sensor</dt>
+        <dd class="col-sm-10 text-left">More information about the Enviro+ sensor can be found on the <a href="https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-enviro-plus" target="blank">Pimoroni website</a>. I followed their instructions when setting it up and used their library to connect to the individual sensors.</dd>
+        <dt class="col-sm-2 text-right">Web application</dt>
+        <dd class="col-sm-10 text-left">Made with Flask, Python, <a href="https://www.chartjs.org/" target="blank">Chart.js</a> and <a href="https://getbootstrap.com/" target="blank">Bootstrap</a>, based on code from <a href="https://cs50.harvard.edu/x/2020/tracks/web/finance/" target="blank">CS50 Finance</a>.</li>
+        <dt class="col-sm-2 text-right">Schematic</dt>
+        <dd class="col-sm-10 text-left">A little schematic to illustrate the workflow.</dd>
+        <dt class="col-sm-2 text-right">Code</dt>
+        <dd class="col-sm-10 text-left">My code can be found on github.</dd>
+    </dl>
+{% endblock %}

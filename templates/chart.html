@@ -1,0 +1,278 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sensor charts
+{% endblock %}
+
+{% block main %}
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sensor charts</title>
+    <!-- import plugin script -->
+    <script src='static/Chart.min.js'></script>
+</head>
+
+<h1>Latest charts</h1>
+<p class="lead">These charts display the latest measurements. Tap on the legend to remove a group of readings.<br>More information about the sensor can be found <a href="https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-enviro-plus">here</a>, charts were made with <a href="https://www.chartjs.org/" target="blank">Chart.js</a>.<br><br></p>
+<h3>BME280 weather sensor</h3>
+<div class="container">
+    <div class="col-md-6 mx-auto" style="overflow-x:auto;"><canvas id="myChart" width="500" height="300"></canvas></div>
+</div>
+<p> </p>
+<h3>PMS5003 particulate matter</h3>
+<div class="container">
+    <div class="col-md-6 mx-auto" style="overflow-x:auto;"><canvas id="myChart2" width="500" height="300"></canvas></div>
+</div>
+<p> </p>
+<h3>MICS6814 gas sensor</h3>
+<div class="container">
+    <div class="col-md-6 mx-auto" style="overflow-x:auto;"><canvas id="myChart3" width="500" height="300"></canvas></div>
+</div>
+
+<script>
+    Chart.defaults.global.responsive = false;
+
+    // define the chart data for chart 1, weather sensor
+    var chartData = {
+      labels : [{% for item in labels %}
+                 "{{item.date.strftime('%H:%M')}}",
+                {% endfor %}],
+      datasets : [{
+          label: 'Temperature (°C)',
+          fill: true,
+          lineTension: 0.1,
+          borderColor: "rgba(114,160,193,2)",
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 2,
+          pointBorderColor: "rgba(114,160,193,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(114,160,193,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in values %}
+                    {{item.temperature}},
+                  {% endfor %}],
+          spanGaps: false
+      },
+      {
+          label: 'Humidity (%)',
+          fill: true,
+          lineTension: 0.1,
+          borderColor: "rgba(114,110,193,2)",
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 2,
+          pointBorderColor: "rgba(114,160,193,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(114,110,193,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in values %}
+                    {{item.humidity}},
+                  {% endfor %}],
+          spanGaps: false
+      }]
+    }
+
+    // get chart canvas
+    var ctx = document.getElementById("myChart").getContext("2d");
+
+    // create the charts using the chart canvas
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+    });
+
+    // define the chart data for chart 2, particle sensor
+    var chartData = {
+      labels : [{% for item in labels %}
+                 "{{item.date.strftime('%H:%M')}}",
+                {% endfor %}],
+      datasets : [{
+          label: 'PM1.0 ug/m3 (ultrafine particles)',
+          lineTension: 0.1,
+          borderColor: "rgba(155, 89, 255, 1)",
+          fill: false,
+          borderCapStyle: 'butt',
+          borderDash: [6,3],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBorderColor: "rgba(155, 89, 255, 1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(155, 89, 255, 1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in particles %}
+                    {{item.pm1}},
+                  {% endfor %}],
+          spanGaps: false
+      },
+      {
+          label: 'PM2.5 ug/m3 (combustion particles, organic compounds, metals)',
+          lineTension: 0.1,
+          borderColor: "rgba(0, 193, 255, 0.5)",
+          fill: false,
+          borderCapStyle: 'butt',
+          borderDash: [6,3],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBorderColor: "rgba(0, 193, 255, 0.5)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(0, 193, 255, 0.5)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in particles %}
+                    {{item.pm2}},
+                  {% endfor %}],
+          spanGaps: false
+
+      },
+      {
+          label: 'PM10 ug/m3  (dust, pollen, mould spores)',
+          lineTension: 0.1,
+          borderColor: "rgba(0, 193, 52, 0.63)",
+          fill: false,
+          borderCapStyle: 'butt',
+          borderDash: [6,3],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBorderColor: "rgba(0, 193, 52, 0.63)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(0, 193, 52, 0.63)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in particles %}
+                    {{item.pm10}},
+                  {% endfor %}],
+          spanGaps: false
+      },]
+    }
+
+    // get chart canvas
+    var ctx = document.getElementById("myChart2").getContext("2d");
+
+    // create the charts using the chart canvas
+    var myChart2 = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+    });
+
+    // define the chart data for chart 3
+    var chartData = {
+      labels : [{% for item in labels %}
+                 "{{item.date.strftime('%H:%M')}}",
+                {% endfor %}],
+      datasets : [{
+          label: 'carbon monoxide (reducing)',
+          lineTension: 0.1,
+          borderColor: "rgba(155, 89, 255, 1)",
+          fill: false,
+          borderCapStyle: 'butt',
+          borderDash: [6,3],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBorderColor: "rgba(155, 89, 255, 1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(155, 89, 255, 1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in gas %}
+                    {{item.gasr}},
+                  {% endfor %}],
+          spanGaps: false
+      },
+      {
+          label: 'nitrogen dioxide (oxidising)',
+          lineTension: 0.1,
+          borderColor: "rgba(0, 140, 255, 1)",
+          fill: false,
+          borderCapStyle: 'butt',
+          borderDash: [6,3],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBorderColor: "rgba(0, 140, 255, 1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(0, 140, 255, 1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in gas %}
+                    {{item.gaso}},
+                  {% endfor %}],
+          spanGaps: false
+      },
+      {
+          label: 'ammonia (NH3)',
+          lineTension: 0.1,
+          borderColor: "rgba(0, 193, 52, 0.63)",
+          fill: false,
+          borderCapStyle: 'butt',
+          borderDash: [6,3],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          borderWidth: 1,
+          pointBorderColor: "rgba(0, 193, 52, 0.63)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(0, 193, 52, 0.63)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data : [{% for item in gas %}
+                    {{item.gasn}},
+                  {% endfor %}],
+          spanGaps: false
+      },]
+    }
+
+    // get chart canvas
+    var ctx = document.getElementById("myChart3").getContext("2d");
+
+    // create the charts using the chart canvas
+    var myChart3 = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+    });
+
+</script>
+{% endblock %}
