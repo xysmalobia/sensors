@@ -25,4 +25,4 @@ This folder contains the css style file, which is losely based on the CS50 style
 Contains the html files to generate the website, also losely based on what I have learned during CS50's week 7-9. Readings.html and chart.html contain the code to display sensor data from the database in a table and the containers for chart.js.
 
 ### Working model:
-A working model that is connected to an active sensor can be found [on my PythonAnywhere site](https://xysmalobia.pythonanywhere.com/).
+A working model that is connected to an active sensor can be found [on my PythonAnywhere site](https://xysmalobia.pythonanywhere.com/). More information can also be found on [my website] (https://www.piandpython.net/).
